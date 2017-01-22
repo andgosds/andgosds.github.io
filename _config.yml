@@ -2,25 +2,24 @@
 # Welcome to Jekyll!
 
 # Website settings
-title: Jalpc
+title: Andés González Sánchez
 description: Jack's blog,use Jekyll and github pages.
 keywords: 'Jack,Jalpc,blog,Jekyll,github,gh-pages'
 baseurl: ''
-url: 'http://www.jack003.com'
+url: 'http://andgosds.github.io'
 # url: "http://127.0.0.1:4000"
 img_path: '/static/img/blog'
 
 # author
 author:
-  name: 'Jack'
-  first_name: 'Kun'
-  last_name: 'Jia'
-  cv: 'http://cv.jack003.com'
-  email: 'me@jack003.com'
-  facebook_username: 'jiakunnj'
-  github_username: 'JiaKunUp'
+  name: 'andgosds'
+  first_name: 'Andrés'
+  last_name: 'González Sánchez'
+  email: 'andgosds@gmail.com'
+  facebook_username: 'facebook_username'
+  github_username: 'andgosds'
   avatar: '/static/img/landing/Foto carnet.jpg'
-  desc: 'I am a Full Stack engineer with website development, automation Ops and writing scripts experience. Life is a continuous learning process, so work makes me more rigorous, travel makes my life more colorful. I can make lots of friends when I coding and travel.'
+  desc: 'Soy un científico de datos en formación. Actualmente cursando el Master en Data Science y Big Data por la Universidad de Sevilla'
 
 # comment
 changyan:
