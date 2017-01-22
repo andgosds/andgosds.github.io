@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="JavaScript,json,array,操作">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |JavaScript中的json数组操作
+        Andrés G.S.|JavaScript中的json数组操作
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -282,69 +298,69 @@
                             JavaScript中的json数组操作
                         </h1>
                     </div>
-                    	<p>在jquery中处理JSON数组的情况中遍历用到的比较多，但是用添加移除这些好像不是太多。
-今天试过json[i].remove(),json.remove(i)之后都不行，看网页的DOM对象中好像JSON数据是以数组的形式出现的，查阅了下相关JS中数组的操作一试果然很爽。
+                    	<p>在jquery中处理JSON数组的情况中遍历用到的比较多，但是用添加移除这些好像不是太多。<br />
+今天试过json[i].remove(),json.remove(i)之后都不行，看网页的DOM对象中好像JSON数据是以数组的形式出现的，查阅了下相关JS中数组的操作一试果然很爽。<br />
 记录下来。</p>
 
 <h2 id="section">数组的创建</h2>
 
-<p><code class="highlighter-rouge">javascript
-var arrayObj = new Array();  //创建一个数组
-var arrayObj = new Array([size]);  //创建一个数组并指定长度，注意不是上限，是长度
-var arrayObj = new Array([element0[, element1[, ...[, elementN]]]]);  //创建一个数组并赋值
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arrayObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>  <span class="c1">//创建一个数组</span>
+<span class="kd">var</span> <span class="nx">arrayObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">([</span><span class="nx">size</span><span class="p">]);</span>  <span class="c1">//创建一个数组并指定长度，注意不是上限，是长度</span>
+<span class="kd">var</span> <span class="nx">arrayObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">([</span><span class="nx">element0</span><span class="p">[,</span> <span class="nx">element1</span><span class="p">[,</span> <span class="p">...[,</span> <span class="nx">elementN</span><span class="p">]]]]);</span>  <span class="c1">//创建一个数组并赋值</span>
+</code></pre>
+</div>
 
 <p>要说明的是，虽然第二种方法创建数组指定了长度，但实际上所有情况下数组都是变长的，也就是说即使指定了长度为5，仍然可以将元素存储在规定长度以外的，注意：这时长度会随之改变。</p>
 
 <h2 id="section-1">数组的元素的访问</h2>
 
-<p><code class="highlighter-rouge">javascript
-var testGetArrValue=arrayObj[1]; //获取数组的元素值
-arrayObj[1]= "这是新值"; //给数组元素赋予新的值
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">testGetArrValue</span><span class="o">=</span><span class="nx">arrayObj</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">//获取数组的元素值</span>
+<span class="nx">arrayObj</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span> <span class="s2">"这是新值"</span><span class="p">;</span> <span class="c1">//给数组元素赋予新的值</span>
+</code></pre>
+</div>
 
 <h2 id="section-2">数组元素的添加</h2>
 
-<p><code class="highlighter-rouge">javascript
-arrayObj. push([item1 [item2 [. . . [itemN ]]]]);// 将一个或多个新元素添加到数组结尾，并返回数组新长度
-arrayObj.unshift([item1 [item2 [. . . [itemN ]]]]);// 将一个或多个新元素添加到数组开始，数组中的元素自动后移，返回数组新长度
-arrayObj.splice(insertPos,0,[item1[, item2[, . . . [,itemN]]]]);//将一个或多个新元素插入到数组的指定位置，插入位置的元素自动后移，返回""。
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">arrayObj</span><span class="p">.</span> <span class="nx">push</span><span class="p">([</span><span class="nx">item1</span> <span class="p">[</span><span class="nx">item2</span> <span class="p">[.</span> <span class="p">.</span> <span class="p">.</span> <span class="p">[</span><span class="nx">itemN</span> <span class="p">]]]]);</span><span class="c1">// 将一个或多个新元素添加到数组结尾，并返回数组新长度</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">unshift</span><span class="p">([</span><span class="nx">item1</span> <span class="p">[</span><span class="nx">item2</span> <span class="p">[.</span> <span class="p">.</span> <span class="p">.</span> <span class="p">[</span><span class="nx">itemN</span> <span class="p">]]]]);</span><span class="c1">// 将一个或多个新元素添加到数组开始，数组中的元素自动后移，返回数组新长度</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">insertPos</span><span class="p">,</span><span class="mi">0</span><span class="p">,[</span><span class="nx">item1</span><span class="p">[,</span> <span class="nx">item2</span><span class="p">[,</span> <span class="p">.</span> <span class="p">.</span> <span class="p">.</span> <span class="p">[,</span><span class="nx">itemN</span><span class="p">]]]]);</span><span class="c1">//将一个或多个新元素插入到数组的指定位置，插入位置的元素自动后移，返回""。</span>
+</code></pre>
+</div>
 
 <h2 id="section-3">数组元素的删除</h2>
 
-<p><code class="highlighter-rouge">javascript
-arrayObj.pop(); //移除最后一个元素并返回该元素值
-arrayObj.shift(); //移除最前一个元素并返回该元素值，数组中元素自动前移
-arrayObj.splice(deletePos,deleteCount); //删除从指定位置deletePos开始的指定数量deleteCount的元素，数组形式返回所移除的元素
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">arrayObj</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span> <span class="c1">//移除最后一个元素并返回该元素值</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span> <span class="c1">//移除最前一个元素并返回该元素值，数组中元素自动前移</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">deletePos</span><span class="p">,</span><span class="nx">deleteCount</span><span class="p">);</span> <span class="c1">//删除从指定位置deletePos开始的指定数量deleteCount的元素，数组形式返回所移除的元素</span>
+</code></pre>
+</div>
 
 <h2 id="section-4">数组的截取和合并</h2>
 
-<p><code class="highlighter-rouge">javascript
-arrayObj.slice(start, [end]); //以数组的形式返回数组的一部分，注意不包括 end 对应的元素，如果省略 end 将复制 start 之后的所有元素
-arrayObj.concat([item1[, item2[, . . . [,itemN]]]]); //将多个数组（也可以是字符串，或者是数组和字符串的混合）连接为一个数组，返回连接好的新的数组
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">arrayObj</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="p">[</span><span class="nx">end</span><span class="p">]);</span> <span class="c1">//以数组的形式返回数组的一部分，注意不包括 end 对应的元素，如果省略 end 将复制 start 之后的所有元素</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="nx">item1</span><span class="p">[,</span> <span class="nx">item2</span><span class="p">[,</span> <span class="p">.</span> <span class="p">.</span> <span class="p">.</span> <span class="p">[,</span><span class="nx">itemN</span><span class="p">]]]]);</span> <span class="c1">//将多个数组（也可以是字符串，或者是数组和字符串的混合）连接为一个数组，返回连接好的新的数组</span>
+</code></pre>
+</div>
 
 <h2 id="section-5">数组的拷贝</h2>
 
-<p><code class="highlighter-rouge">javascript
-arrayObj.slice(0); //返回数组的拷贝数组，注意是一个新的数组，不是指向
-arrayObj.concat(); //返回数组的拷贝数组，注意是一个新的数组，不是指向
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">arrayObj</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//返回数组的拷贝数组，注意是一个新的数组，不是指向</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">concat</span><span class="p">();</span> <span class="c1">//返回数组的拷贝数组，注意是一个新的数组，不是指向</span>
+</code></pre>
+</div>
 
 <h2 id="section-6">数组元素的排序</h2>
 
-<p><code class="highlighter-rouge">javascript
-arrayObj.reverse(); //反转元素（最前的排到最后、最后的排到最前），返回数组地址
-arrayObj.sort(); //对数组元素排序，返回数组地址
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">arrayObj</span><span class="p">.</span><span class="nx">reverse</span><span class="p">();</span> <span class="c1">//反转元素（最前的排到最后、最后的排到最前），返回数组地址</span>
+<span class="nx">arrayObj</span><span class="p">.</span><span class="nx">sort</span><span class="p">();</span> <span class="c1">//对数组元素排序，返回数组地址</span>
+</code></pre>
+</div>
 
 <h2 id="section-7">数组元素的字符串化</h2>
 
-<p><code class="highlighter-rouge">javascript
-arrayObj.join(separator); //返回字符串，这个字符串将数组的每一个元素值连接在一起，中间用 separator 隔开。
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">arrayObj</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">separator</span><span class="p">);</span> <span class="c1">//返回字符串，这个字符串将数组的每一个元素值连接在一起，中间用 separator 隔开。</span>
+</code></pre>
+</div>
 
 <p>toLocaleString 、toString 、valueOf：可以看作是join的特殊用法，不常用</p>
 
@@ -364,6 +380,8 @@ arrayObj.join(separator); //返回字符串，这个字符串将数组的每一�
                                 <div>
                                 
                                 
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//html/2016/06/23/javascript-json-array.html">0</span> comments
+                                
                                 </div>
                             </div>
                         </div>
@@ -379,10 +397,38 @@ arrayObj.join(separator); //返回字符串，这个字符串将数组的每一�
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -404,7 +450,45 @@ arrayObj.join(separator); //返回字符串，这个字符串将数组的每一�
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 

@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="git,repo,clean,清洗">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |清洗 Git Repo 代码仓库
+        Andrés G.S.|清洗 Git Repo 代码仓库
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -290,16 +306,16 @@
 
 <p>首先进行 Git 垃圾回收：</p>
 
-<p><code class="highlighter-rouge">
-git gc --auto
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git gc --auto
+</code></pre>
+</div>
 
 <p>其次查看 Git 仓库占用空间：</p>
 
-<p><code class="highlighter-rouge">
-$ du -hs .git/objects
+<div class="highlighter-rouge"><pre class="highlight"><code>$ du -hs .git/objects
 45M .git/objects
-</code></p>
+</code></pre>
+</div>
 
 <p>然后找出历史中超过一定大小的文件，最后在历史中删除并且提交。如果感兴趣手动处理这个过程可以参照文章后边的链接。</p>
 
@@ -307,34 +323,33 @@ $ du -hs .git/objects
 
 <p>清理历史中的文件：</p>
 
-<p><code class="highlighter-rouge">
-git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch ****/nohup.out' --prune-empty --tag-name-filter cat -- --all
+<div class="highlighter-rouge"><pre class="highlight"><code>git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch ****/nohup.out' --prune-empty --tag-name-filter cat -- --all
 git filter-branch --index-filter 'git rm --cached --ignore-unmatch ****/nohup.out' HEAD
 git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
-</code></p>
+</code></pre>
+</div>
 
 <p>强制提交覆盖：</p>
 
-<p><code class="highlighter-rouge">
-git reflog expire --expire=now --all
+<div class="highlighter-rouge"><pre class="highlight"><code>git reflog expire --expire=now --all
 git gc --prune=now
 git push --all --force
 git push --tags --force
-</code></p>
+</code></pre>
+</div>
 
 <h2 id="section-3">查找大文件并清理</h2>
 
 <p>下载<a href="https://raw.githubusercontent.com/JiaKunUp/jalpc_jekyll_theme/gh-pages/git_find_big.sh">Bash Script</a>，在项目目录下：</p>
 
-<p><code class="highlighter-rouge">
-$ chmod 777 git_find_big.sh
+<div class="highlighter-rouge"><pre class="highlight"><code>$ chmod 777 git_find_big.sh
 $ git gc --auto
-</code></p>
+</code></pre>
+</div>
 
 <p>查找大文件：</p>
 
-<p><code class="highlighter-rouge">
-$ git_find_big.sh
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git_find_big.sh
 All sizes are in kB's. The pack column is the size of the object, compressed, inside the pack file.
 size  pack  SHA                                       location
 592   580   e3117f48bc305dd1f5ae0df3419a0ce2d9617336  media/img/emojis.jar
@@ -342,19 +357,20 @@ size  pack  SHA                                       location
 518   514   22f7f9a84905aaec019dae9ea1279a9450277130  media/images/screenshots/issue-tracker-wiki.jar
 337   92    1fd8ac97c9fecf74ba6246eacef8288e89b4bff5  media/js/lib/bundle.js
 240   239   e0c26d9959bd583e5ef32b6206fc8abe5fea8624  media/img/featuretour/heroshot.png
-</code></p>
+</code></pre>
+</div>
 
 <p>手动清理文件：</p>
 
-<p><code class="highlighter-rouge">
-git filter-branch --index-filter 'git rm --cached --ignore-unmatch filename' HEAD
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git filter-branch --index-filter 'git rm --cached --ignore-unmatch filename' HEAD
+</code></pre>
+</div>
 
 <p>提交</p>
 
-<p><code class="highlighter-rouge">
-git push -f
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git push -f
+</code></pre>
+</div>
 
                     <hr>
                     <div class="row">
@@ -369,6 +385,8 @@ git push -f
                                 <h5>Stats:</h5>
                                 <div>
                                 
+                                
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//linux/2016/06/19/clean-git-repo.html">0</span> comments
                                 
                                 </div>
                             </div>
@@ -385,10 +403,38 @@ git push -f
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -410,7 +456,45 @@ git push -f
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 

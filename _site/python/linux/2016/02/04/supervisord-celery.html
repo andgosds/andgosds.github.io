@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="Python,supervisord,celery">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |通过supervisord管理celery守护进程
+        Andrés G.S.|通过supervisord管理celery守护进程
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -292,23 +308,22 @@
 
 <h4 id="configuration">Configuration</h4>
 
-<p>配置其实很简单，主要就是设置supervisord.conf和celerd.conf两个文件。celery官方还提供了这两个文件的示例
+<p>配置其实很简单，主要就是设置supervisord.conf和celerd.conf两个文件。celery官方还提供了这两个文件的示例<br />
 下面是我这两个文件的设置，提供给正在弄这个的同学们参考。</p>
 
 <p>supervisord.conf</p>
 
-<p>```
-[unix_http_server]
+<div class="highlighter-rouge"><pre class="highlight"><code>[unix_http_server]
 file=/tmp/supervisor.sock   ; path to your socket file
 ;chmod=0777
-;chown=webscan:webscan</p>
+;chown=webscan:webscan
 
-<p>[inet_http_server]
+[inet_http_server]
 port=1222
 username=sinasec
-password=xxxxxxx</p>
+password=xxxxxxx
 
-<p>[supervisord]
+[supervisord]
 logfile=/var/log/supervisord/supervisord.log ; supervisord log file
 logfile_maxbytes=50MB       ; maximum size of logfile before rotation
 logfile_backups=10          ; number of backed up logfiles
@@ -318,75 +333,76 @@ nodaemon=false              ; run supervisord as a daemon
 minfds=1024                 ; number of startup file descriptors
 minprocs=200                ; number of process descriptors
 user=root                  ; default user
-childlogdir=/var/log/supervisord/            ; where child log files will live</p>
+childlogdir=/var/log/supervisord/            ; where child log files will live
 
-<p>[rpcinterface:supervisor]
-supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</p>
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
-<p>[supervisorctl]
-serverurl=unix:///tmp/supervisor.sock ; use unix:// schem for a unix sockets.</p>
+[supervisorctl]
+serverurl=unix:///tmp/supervisor.sock ; use unix:// schem for a unix sockets.
 
-<p>; celery的监控工具flower自身也不支持以daemon方式运行，刚好也可以通过supervisord管理起来。
+; celery的监控工具flower自身也不支持以daemon方式运行，刚好也可以通过supervisord管理起来。
 [program:flower]
-command=/usr/local/bin/flower –adress=0.0.0.0 –port=1221 
+command=/usr/local/bin/flower --adress=0.0.0.0 --port=1221 
 autostart=true
 autorestart=true
 user=webscan
 directory=/var/webscan/scanner/
 stdout_logfile_maxbytes = 50MB
 stdoiut_logfile_backups = 20
-stdout_logfile = /var/log/flower.log</p>
+stdout_logfile = /var/log/flower.log
 
-<p>[include]</p>
+[include]
 
-<h1 id="uncomment-this-line-for-celeryd-for-python">Uncomment this line for celeryd for Python</h1>
-<p>files=celeryd.conf</p>
+# Uncomment this line for celeryd for Python
+files=celeryd.conf
 
-<h1 id="uncomment-this-line-for-celeryd-for-django">Uncomment this line for celeryd for Django.</h1>
-<p>;files=django/celeryd.conf</p>
+# Uncomment this line for celeryd for Django.
+;files=django/celeryd.conf
 
-<p>```</p>
+</code></pre>
+</div>
 
 <p>基本上就是官方那个配置文件，拿过来加上了flower的设置。</p>
 
 <p>celerd.conf</p>
 
-<p>```
-[program:celery]
-command=celery worker –hostname=celery-%(process_num)d.webscan.com –loglevel=INFO</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[program:celery]
+command=celery worker --hostname=celery-%(process_num)d.webscan.com --loglevel=INFO
 
-<p>process_name = %(program_name)s-%(process_num)d</p>
+process_name = %(program_name)s-%(process_num)d
 
-<p>environment=PYTHONPATH=/var/webscan/scanner/</p>
+environment=PYTHONPATH=/var/webscan/scanner/
 
-<p>directory=/var/webscan/scanner
+directory=/var/webscan/scanner
 user=webscan
-numprocs=4<br />
+numprocs=4  
 stdout_logfile=/var/log/celeryd.log
 stderr_logfile=/var/log/celeryd.log
 autostart=true
 autorestart=true
 startsecs=10
-```</p>
+</code></pre>
+</div>
 
 <p>这个设置里比较不同的是numprocs我设置成了4，既celery worker进程会同时起4个，分别命名celery-0 ,celery-1。之所以要在一台机器上起4个worker进程，是因为我们的celery pool用的是gevent，而为了充分利用多核，因此一台机器上需要起4个worker。</p>
 
 <h4 id="usage">Usage</h4>
 <p>上面的设置都完成后先启动supervisord</p>
 
-<p><code class="highlighter-rouge">
-supervisord -c /etc/supervisord.conf
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>supervisord -c /etc/supervisord.conf
+</code></pre>
+</div>
 
 <p>然后就可以通过supervisorctl对这些进程进行管理了：</p>
 
-<p><code class="highlighter-rouge">
-supervisorctl restart flower
+<div class="highlighter-rouge"><pre class="highlight"><code>supervisorctl restart flower
 supervisorctl stop celery:celery-0
-</code></p>
+</code></pre>
+</div>
 
-<p>浏览器访问http://10.1.1.1:1222/ 还可以通过web对这些进程进行管理
-<img src="/supervisord_celery/celery-web.jpg" alt="celery" /></p>
+<p>浏览器访问http://10.1.1.1:1222/ 还可以通过web对这些进程进行管理<br />
+<img src="/static/img/blog/supervisord_celery/celery-web.jpg" alt="celery" /></p>
 
 
                     <hr>
@@ -407,6 +423,8 @@ supervisorctl stop celery:celery-0
                                 <div>
                                 
                                 
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//python/linux/2016/02/04/supervisord-celery.html">0</span> comments
+                                
                                 </div>
                             </div>
                         </div>
@@ -422,10 +440,38 @@ supervisorctl stop celery:celery-0
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -447,7 +493,45 @@ supervisorctl stop celery:celery-0
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 

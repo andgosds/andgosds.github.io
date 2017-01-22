@@ -1,25 +1,25 @@
-<<<<<<< HEAD
 # Welcome to Jekyll!
 
 # Website settings
-title: Andés González Sánchez
-description: Jack's blog,use Jekyll and github pages.
-keywords: 'Jack,Jalpc,blog,Jekyll,github,gh-pages'
+title: Andrés G.S.
+description: Página personal de Andrés G.S.
+keywords: 'Andrés,datos,data,sciece,Sevilla,machine learning'
 baseurl: ''
-url: 'http://andgosds.github.io'
+url: 'https://andgosds.github.io/'
 # url: "http://127.0.0.1:4000"
 img_path: '/static/img/blog'
 
 # author
 author:
-  name: 'andgosds'
+  name: 'andresgsds'
   first_name: 'Andrés'
   last_name: 'González Sánchez'
+  cv: 
   email: 'andgosds@gmail.com'
-  facebook_username: 'facebook_username'
-  github_username: 'andgosds'
-  avatar: '/static/img/landing/Foto carnet.jpg'
-  desc: 'Soy un científico de datos en formación. Actualmente cursando el Master en Data Science y Big Data por la Universidad de Sevilla'
+  facebook_username: ''
+  github_username: ''
+  avatar: '/static/img/landing/Foto.jpg'
+  desc: 'Soy un científico de datos en formación. Actualmente cursando master en Data Science y Big Data'
 
 # comment
 changyan:
@@ -53,7 +53,4 @@ highlighter: rouge
 markdown: kramdown
 kramdown:
   input: GFM
-  syntax_highlighter: rouge
-=======
-theme: jekyll-theme-cayman
->>>>>>> c9fd92b6bcafc5e4dd4559d9cfa7c07d203ecf22
+syntax_highlighter: rouge

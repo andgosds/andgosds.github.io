@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="JavaScript,if,optimise,statement,优化">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |JavaScript中if语句的几种优化代码的写法
+        Andrés G.S.|JavaScript中if语句的几种优化代码的写法
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -286,28 +302,28 @@
 
 <p>代码如下：</p>
 
-<p><code class="highlighter-rouge">javascript
-if (foo) bar();else baz(); ==&gt; foo? bar(): baz();
-if (!foo) bar();else baz(); ==&gt; foo? baz(): bar();
-if (foo) return bar();else return baz(); ==&gt; return foo? bar(): baz();
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="nx">bar</span><span class="p">();</span><span class="k">else</span> <span class="nx">baz</span><span class="p">();</span> <span class="o">==&gt;</span> <span class="nx">foo</span><span class="p">?</span> <span class="nx">bar</span><span class="p">():</span> <span class="nx">baz</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">foo</span><span class="p">)</span> <span class="nx">bar</span><span class="p">();</span><span class="k">else</span> <span class="nx">baz</span><span class="p">();</span> <span class="o">==&gt;</span> <span class="nx">foo</span><span class="p">?</span> <span class="nx">baz</span><span class="p">():</span> <span class="nx">bar</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="k">return</span> <span class="nx">bar</span><span class="p">();</span><span class="k">else</span> <span class="k">return</span> <span class="nx">baz</span><span class="p">();</span> <span class="o">==&gt;</span> <span class="k">return</span> <span class="nx">foo</span><span class="p">?</span> <span class="nx">bar</span><span class="p">():</span> <span class="nx">baz</span><span class="p">();</span>
+</code></pre>
+</div>
 
 <h3 id="andor">二、使用and(&amp;&amp;)和or(||)运算符</h3>
 
 <p>代码如下：</p>
 
-<p><code class="highlighter-rouge">javascript
-if (foo) bar(); ==&gt; foo &amp;&amp; bar();
-if (!foo) bar(); ==&gt; foo || bar();
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="nx">bar</span><span class="p">();</span> <span class="o">==&gt;</span> <span class="nx">foo</span> <span class="o">&amp;&amp;</span> <span class="nx">bar</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">foo</span><span class="p">)</span> <span class="nx">bar</span><span class="p">();</span> <span class="o">==&gt;</span> <span class="nx">foo</span> <span class="o">||</span> <span class="nx">bar</span><span class="p">();</span>
+</code></pre>
+</div>
 
 <h3 id="section-1">三、省略大括号{}</h3>
 
 <p>代码如下：</p>
 
-<p><code class="highlighter-rouge">javascript
-if (foo) return bar(); else other(); ==&gt; {if (foo) return bar();other()}
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="k">return</span> <span class="nx">bar</span><span class="p">();</span> <span class="k">else</span> <span class="nx">other</span><span class="p">();</span> <span class="o">==&gt;</span> <span class="p">{</span><span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="k">return</span> <span class="nx">bar</span><span class="p">();</span><span class="nx">other</span><span class="p">()}</span>
+</code></pre>
+</div>
 
 
                     <hr>
@@ -324,6 +340,8 @@ if (foo) return bar(); else other(); ==&gt; {if (foo) return bar();other()}
                                 <div>
                                 
                                 
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//html/2016/06/26/JavaScript-if-statement.html">0</span> comments
+                                
                                 </div>
                             </div>
                         </div>
@@ -339,10 +357,38 @@ if (foo) return bar(); else other(); ==&gt; {if (foo) return bar();other()}
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -364,7 +410,45 @@ if (foo) return bar(); else other(); ==&gt; {if (foo) return bar();other()}
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 

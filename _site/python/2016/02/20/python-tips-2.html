@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="Python,tips,优化">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |Python代码优化Tips(二)
+        Andrés G.S.|Python代码优化Tips(二)
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -290,65 +306,65 @@
 
 <h6 id="section">方法一：</h6>
 
-<p><code class="highlighter-rouge">python
-index = 0
-for i in li:
-    print 'index:', index, 'element:', i
-    index += 1
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">li</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'index:'</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="s">'element:'</span><span class="p">,</span> <span class="n">i</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre>
+</div>
 
 <h6 id="section-1">方法二：</h6>
 
-<p><code class="highlighter-rouge">python
-for i in range(len(li)):
-    print 'index:', i, 'element:', li[i]
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">)):</span>
+    <span class="k">print</span> <span class="s">'index:'</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">'element:'</span><span class="p">,</span> <span class="n">li</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre>
+</div>
 
 <h6 id="section-2">方法三：</h6>
 
-<p><code class="highlighter-rouge">python
-index = 0
-while index &lt; len(li):
-    print 'index:', index, 'element:', li[index]
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">'index:'</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="s">'element:'</span><span class="p">,</span> <span class="n">li</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</code></pre>
+</div>
 
 <h6 id="section-3">方法四：</h6>
 
-<p><code class="highlighter-rouge">python
-for i, e in zip(range(len(li)), li):
-    print 'index:', i, 'element:', e
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">)),</span> <span class="n">li</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">'index:'</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">'element:'</span><span class="p">,</span> <span class="n">e</span>
+</code></pre>
+</div>
 
 <h6 id="section-4">方法五：</h6>
 
-<p><code class="highlighter-rouge">python
-for i, e in enumerate(li):
-    print 'index:', i, 'element:', e
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">li</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">'index:'</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">'element:'</span><span class="p">,</span> <span class="n">e</span>
+</code></pre>
+</div>
 
 <p>对于字典便利迭代则使用如下方法：</p>
 
-<p><code class="highlighter-rouge">python
-dict1 = {'a': 1, 'b': 2}
-for k,v in dict1:
-    print k, v
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dict1</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+</code></pre>
+</div>
 
 <h4 id="with">⑦使用with自动关闭资源</h4>
 
 <p>文件写入一例：</p>
 
-<p><code class="highlighter-rouge">
-&gt;&gt;&gt; f = open('test.txt', 'w')
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; f = open('test.txt', 'w')
 &gt;&gt;&gt; f.write('test')
-</code></p>
+</code></pre>
+</div>
 
 <p>这样结束会发现文件并没有内容，原因是在操作完成后忘记关闭了，这是一个常识，二使用with就不会出现这样的情况：</p>
 
-<p><code class="highlighter-rouge">python
-with open('test.txt', 'w') as f:
-    f.write('test')
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'test.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'test'</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p>with语句可以在代码块执行完毕后还原进入该代码块的现场。包含有with语句的代码块的执行过程如下：</p>
 
@@ -389,29 +405,27 @@ with open('test.txt', 'w') as f:
 
 <p>自定义上下文管理器一例：</p>
 
-<p>``` python
-class MyClass(object):
-    def <strong>enter</strong>(self):
-        print ‘entering…’</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>def __exit__(self, exceprion_type, exception_value, traceback):
-    print 'leaving...'
-    if exception_type is None:
-        print 'no exceptions!'
-        return False
-    elif exception_type is ValueError:
-        print 'value error!'
-        return True
-    else:
-        print 'other error'
-        return True ```
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">'entering...'</span>
+        
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exceprion_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">'leaving...'</span>
+        <span class="k">if</span> <span class="n">exception_type</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'no exceptions!'</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">elif</span> <span class="n">exception_type</span> <span class="ow">is</span> <span class="nb">ValueError</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'value error!'</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'other error'</span>
+            <span class="k">return</span> <span class="bp">True</span>
 </code></pre>
 </div>
 
 <p>引用此class：</p>
 
-<p><code class="highlighter-rouge">
-&gt;&gt;&gt; with  MyClass():
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; with  MyClass():
 •••     print 'testing...'
 •••     raise(ValueError)
 •••
@@ -428,7 +442,8 @@ testing...
 leaving...
 no exceptions!
 &gt;&gt;&gt;
-</code></p>
+</code></pre>
+</div>
 
 <p>除了<code class="highlighter-rouge">__enter__()</code>和<code class="highlighter-rouge">__exit__()</code>方法，还有<code class="highlighter-rouge">contextlib</code>模块可以辅助上下文管理，该模块是通过Generator实现的，contextlib中的contextmanager作为装饰器来提供一种针对函数级别的上下文管理机制，可以直接说作用函数\对象而不用去关心<code class="highlighter-rouge">__enter__()</code>和<code class="highlighter-rouge">__exit__()</code>方法的具体实现。具体可以百度。</p>
 
@@ -446,6 +461,8 @@ no exceptions!
                                 <div>
                                 
                                 
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//python/2016/02/20/python-tips-2.html">0</span> comments
+                                
                                 </div>
                             </div>
                         </div>
@@ -461,10 +478,38 @@ no exceptions!
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -486,7 +531,45 @@ no exceptions!
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 

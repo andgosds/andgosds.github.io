@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="iterm,mac,lrzsz,oh-my-zsh">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |使用iTerm2上传下载文件
+        Andrés G.S.|使用iTerm2上传下载文件
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -288,126 +304,129 @@
 
 <p>在Mac电脑上安装rz/sz：<code class="highlighter-rouge">brew install lrzsz</code></p>
 
-<p>``` shell
-#!/usr/bin/env bash</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
 
-<p>#
-# iterm2-zmodem
-#
-# copyright (c) 2013 by Harald Lapp <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#097;&#114;&#097;&#108;&#100;&#064;&#111;&#099;&#116;&#114;&#105;&#115;&#046;&#111;&#114;&#103;">&#104;&#097;&#114;&#097;&#108;&#100;&#064;&#111;&#099;&#116;&#114;&#105;&#115;&#046;&#111;&#114;&#103;</a>
-#
-# AppleScript portion from:
-# http://stackoverflow.com/questions/4309087/cancel-button-on-osascript-in-a-bash-script
-# licensed under cc-wiki with attribution required
-#</p>
+<span class="c">#</span>
+<span class="c"># iterm2-zmodem</span>
+<span class="c">#</span>
+<span class="c"># copyright (c) 2013 by Harald Lapp &lt;harald@octris.org&gt;</span>
+<span class="c">#</span>
+<span class="c"># AppleScript portion from:</span>
+<span class="c"># http://stackoverflow.com/questions/4309087/cancel-button-on-osascript-in-a-bash-script</span>
+<span class="c"># licensed under cc-wiki with attribution required</span>
+<span class="c">#</span>
 
-<p>#
-# This script can be found at:
-# https://github.com/aurora/iterm2-zmodem
-#</p>
+<span class="c">#</span>
+<span class="c"># This script can be found at:</span>
+<span class="c"># https://github.com/aurora/iterm2-zmodem</span>
+<span class="c">#</span>
 
-<p>#
-# This is a re-implementation of the shell scripts “iterm2-recv-zmodem.sh” and
-# “iterm2-send-zmodem.sh” found at https://github.com/mmastrac/iterm2-zmodem
-#</p>
+<span class="c">#</span>
+<span class="c"># This is a re-implementation of the shell scripts "iterm2-recv-zmodem.sh" and</span>
+<span class="c"># "iterm2-send-zmodem.sh" found at https://github.com/mmastrac/iterm2-zmodem</span>
+<span class="c">#</span>
 
-<h1 id="usage">usage</h1>
-<p>if [[ $1 != “sz” &amp;&amp; $1 != “rz” ]]; then
-    echo “usage: $0 sz|rz”
-    exit
-fi</p>
+<span class="c"># usage</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> !<span class="o">=</span> <span class="s2">"sz"</span> <span class="o">&amp;&amp;</span> <span class="nv">$1</span> !<span class="o">=</span> <span class="s2">"rz"</span> <span class="o">]]</span>; <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"usage: </span><span class="nv">$0</span><span class="s2"> sz|rz"</span>
+    <span class="nb">exit
+</span><span class="k">fi</span>
 
-<h1 id="send-z-modem-cancel-sequence">send Z-Modem cancel sequence</h1>
-<p>function cancel {
-	echo -e \x18\x18\x18\x18\x18
-}</p>
+<span class="c"># send Z-Modem cancel sequence</span>
+<span class="k">function </span>cancel <span class="o">{</span>
+	<span class="nb">echo</span> -e <span class="se">\\</span>x18<span class="se">\\</span>x18<span class="se">\\</span>x18<span class="se">\\</span>x18<span class="se">\\</span>x18
+<span class="o">}</span>
 
-<h1 id="send-notification-using-growlnotify">send notification using growlnotify</h1>
-<p>function notify {
-    local msg=$1</p>
+<span class="c"># send notification using growlnotify</span>
+<span class="k">function </span>notify <span class="o">{</span>
+    <span class="nb">local </span><span class="nv">msg</span><span class="o">=</span><span class="nv">$1</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>if command -v growlnotify &gt;/dev/null 2&gt;&amp;1; then
-    growlnotify -a /Applications/iTerm.app -n "iTerm" -m "$msg" -t "File transfer"
-else
-    echo "# $msg" | tr '\n' ' '
-fi }
-</code></pre>
-</div>
+    <span class="k">if </span><span class="nb">command</span> -v growlnotify &gt;/dev/null 2&gt;&amp;1; <span class="k">then
+        </span>growlnotify -a /Applications/iTerm.app -n <span class="s2">"iTerm"</span> -m <span class="s2">"</span><span class="nv">$msg</span><span class="s2">"</span> -t <span class="s2">"File transfer"</span>
+    <span class="k">else
+        </span><span class="nb">echo</span> <span class="s2">"# </span><span class="nv">$msg</span><span class="s2">"</span> | tr <span class="s1">'\n'</span> <span class="s1">' '</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
 
-<h1 id="setup">setup</h1>
-<p>[[ $LRZSZ_PATH != “” ]] &amp;&amp; LRZSZ_PATH=”:$LRZSZ_PATH” || LRZSZ_PATH=””</p>
+<span class="c">#setup</span>
+<span class="o">[[</span> <span class="nv">$LRZSZ_PATH</span> !<span class="o">=</span> <span class="s2">""</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">LRZSZ_PATH</span><span class="o">=</span><span class="s2">":</span><span class="nv">$LRZSZ_PATH</span><span class="s2">"</span> <span class="o">||</span> <span class="nv">LRZSZ_PATH</span><span class="o">=</span><span class="s2">""</span>
 
-<p>PATH=$(command -p getconf PATH):/usr/local/bin$LRZSZ_PATH
-ZCMD=$(
-    if command -v $1 &gt;/dev/null 2&gt;&amp;1; then
-        echo “$1”
-    elif command -v l$1 &gt;/dev/null 2&gt;&amp;1; then
-        echo “l$1”
-    fi
-)</p>
+<span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">command</span> -p getconf PATH<span class="k">)</span>:/usr/local/bin<span class="nv">$LRZSZ_PATH</span>
+<span class="nv">ZCMD</span><span class="o">=</span><span class="k">$(</span>
+    <span class="k">if </span><span class="nb">command</span> -v <span class="nv">$1</span> &gt;/dev/null 2&gt;&amp;1; <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+    <span class="k">elif </span><span class="nb">command</span> -v l<span class="nv">$1</span> &gt;/dev/null 2&gt;&amp;1; <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"l</span><span class="nv">$1</span><span class="s2">"</span>
+    <span class="k">fi</span>
+<span class="k">)</span>
 
-<h1 id="main">main</h1>
-<p>if [[ $ZCMD = “” ]]; then
-    cancel
-    echo</p>
+<span class="c"># main</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$ZCMD</span> <span class="o">=</span> <span class="s2">""</span> <span class="o">]]</span>; <span class="k">then
+    </span>cancel
+    <span class="nb">echo
 
-<div class="highlighter-rouge"><pre class="highlight"><code>notify "Unable to find Z-Modem tools"
-exit elif [[ $1 = "rz" ]]; then
-# receive a file
-DST=$(
-    osascript \
-        -e "tell application \"iTerm\" to activate" \
-        -e "tell application \"iTerm\" to set thefile to choose folder with prompt \"Choose a folder to place received files in\"" \
-        -e "do shell script (\"echo \"&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;\"\")"
-)
+    </span>notify <span class="s2">"Unable to find Z-Modem tools"</span>
+    <span class="nb">exit
+</span><span class="k">elif</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">=</span> <span class="s2">"rz"</span> <span class="o">]]</span>; <span class="k">then</span>
+    <span class="c"># receive a file</span>
+    <span class="nv">DST</span><span class="o">=</span><span class="k">$(</span>
+        osascript <span class="se">\</span>
+            -e <span class="s2">"tell application </span><span class="se">\"</span><span class="s2">iTerm</span><span class="se">\"</span><span class="s2"> to activate"</span> <span class="se">\</span>
+            -e <span class="s2">"tell application </span><span class="se">\"</span><span class="s2">iTerm</span><span class="se">\"</span><span class="s2"> to set thefile to choose folder with prompt </span><span class="se">\"</span><span class="s2">Choose a folder to place received files in</span><span class="se">\"</span><span class="s2">"</span> <span class="se">\</span>
+            -e <span class="s2">"do shell script (</span><span class="se">\"</span><span class="s2">echo </span><span class="se">\"</span><span class="s2">&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;</span><span class="se">\"\"</span><span class="s2">)"</span>
+    <span class="k">)</span>
 
-if [[ $DST = "" ]]; then
-    cancel
-    echo
-fi
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$DST</span> <span class="o">=</span> <span class="s2">""</span> <span class="o">]]</span>; <span class="k">then
+        </span>cancel
+        <span class="nb">echo
+    </span><span class="k">fi
 
-cd "$DST"
+	</span><span class="nb">cd</span> <span class="s2">"</span><span class="nv">$DST</span><span class="s2">"</span>
 
-notify "Z-Modem started receiving file"
+    notify <span class="s2">"Z-Modem started receiving file"</span>
 
-$ZCMD -e -y
-echo
+    <span class="nv">$ZCMD</span> -e -y
+    <span class="nb">echo
 
-notify "Z-Modem finished receiving file" else
-# send a file
-SRC=$(
-    osascript \
-        -e "tell application \"iTerm\" to activate" \
-        -e "tell application \"iTerm\" to set thefile to choose file with prompt \"Choose a file to send\"" \
-        -e "do shell script (\"echo \"&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;\"\")"
-)
+    </span>notify <span class="s2">"Z-Modem finished receiving file"</span>
+<span class="k">else</span>
+    <span class="c"># send a file</span>
+    <span class="nv">SRC</span><span class="o">=</span><span class="k">$(</span>
+        osascript <span class="se">\</span>
+            -e <span class="s2">"tell application </span><span class="se">\"</span><span class="s2">iTerm</span><span class="se">\"</span><span class="s2"> to activate"</span> <span class="se">\</span>
+            -e <span class="s2">"tell application </span><span class="se">\"</span><span class="s2">iTerm</span><span class="se">\"</span><span class="s2"> to set thefile to choose file with prompt </span><span class="se">\"</span><span class="s2">Choose a file to send</span><span class="se">\"</span><span class="s2">"</span> <span class="se">\</span>
+            -e <span class="s2">"do shell script (</span><span class="se">\"</span><span class="s2">echo </span><span class="se">\"</span><span class="s2">&amp;(quoted form of POSIX path of thefile as Unicode text)&amp;</span><span class="se">\"\"</span><span class="s2">)"</span>
+    <span class="k">)</span>
 
-if [[ $SRC = "" ]]; then
-    cancel
-    echo
-fi
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$SRC</span> <span class="o">=</span> <span class="s2">""</span> <span class="o">]]</span>; <span class="k">then
+        </span>cancel
+        <span class="nb">echo
+    </span><span class="k">fi
 
-notify "Z-Modem started sending $SRC"
+    </span>notify <span class="s2">"Z-Modem started sending
+</span><span class="nv">$SRC</span><span class="s2">"</span>
 
-$ZCMD -e "$SRC"
-echo
+    <span class="nv">$ZCMD</span> -e <span class="s2">"</span><span class="nv">$SRC</span><span class="s2">"</span>
+    <span class="nb">echo
 
-notify "Z-Modem finished sending $SRC" fi ```
+    </span>notify <span class="s2">"Z-Modem finished sending
+</span><span class="nv">$SRC</span><span class="s2">"</span>
+<span class="k">fi</span>
 </code></pre>
 </div>
 
 <p>首先将这个脚本写到/usr/local/bin/iterm2-zmodem文件下，给它可执行权限<code class="highlighter-rouge">chmod +x /usr/local/bin/iterm2/zmodem</code>，这个脚本是在Linux终端使用rz/sz时调用的，需要由iTerm2触发，在iTerm2-&gt;Preferences…-&gt;Profiles-&gt;Advanced下的Triggers，点击Edit进入编辑。加入如下配置即可：</p>
 
-<p>```
-Regular expression: **B0100
+<div class="highlighter-rouge"><pre class="highlight"><code>Regular expression: \*\*B0100
 Action:             Run Coprocess
-Parameters:         /usr/local/bin/iterm2-zmodem sz</p>
+Parameters:         /usr/local/bin/iterm2-zmodem sz
 
-<p>Regular expression: **B00000000000000
+Regular expression: \*\*B00000000000000
 Action:             Run Coprocess
 Parameters:         /usr/local/bin/iterm2-zmodem rz
-```
-Github链接：<a href="https://github.com/JiaKunUp/iterm2-zmodem">https://github.com/JiaKunUp/iterm2-zmodem</a></p>
+</code></pre>
+</div>
+<p>Github链接：<a href="https://github.com/JiaKunUp/iterm2-zmodem">https://github.com/JiaKunUp/iterm2-zmodem</a></p>
 
                     <hr>
                     <div class="row">
@@ -422,6 +441,8 @@ Github链接：<a href="https://github.com/JiaKunUp/iterm2-zmodem">https://githu
                                 <h5>Stats:</h5>
                                 <div>
                                 
+                                
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//mac/2016/05/29/Z-Modem-integration-for-iTerm2.html">0</span> comments
                                 
                                 </div>
                             </div>
@@ -438,10 +459,38 @@ Github链接：<a href="https://github.com/JiaKunUp/iterm2-zmodem">https://githu
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -463,7 +512,45 @@ Github链接：<a href="https://github.com/JiaKunUp/iterm2-zmodem">https://githu
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 

@@ -12,11 +12,11 @@
   
     <meta name="keywords" content="linux,lvs,dr,tun,nat">
   
-  <meta name="author" content="">
+  <meta name="author" content="andresgsds">
 
   <title>
     
-        |LVS三种工作模式脚本及比较
+        Andrés G.S.|LVS三种工作模式脚本及比较
     
   </title>
   <!-- favicon -->
@@ -143,6 +143,22 @@
 
 <!-- GrowingIO -->
 
+  <script>
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', 'a49d4901c7853da9']);
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
+
 <!-- cb-search -->
 <!-- <script src="/search/js/cb-search.js"></script> -->
 </head>
@@ -176,7 +192,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"></a>
+                    <a class="navbar-brand" href="/">Andrés G.S.</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -282,211 +298,211 @@
                             LVS三种工作模式脚本及比较
                         </h1>
                     </div>
-                    	<p><code class="highlighter-rouge">
-yum -y install ipvsadm
+                    	<div class="highlighter-rouge"><pre class="highlight"><code>yum -y install ipvsadm
 modprobe -l|grep ipvs     ##检查ipvs的模块
-</code></p>
+</code></pre>
+</div>
 
 <p>-g 表示使用DR方式，-m表示NAT方式，-i表示tunneling方式。</p>
 
 <h4 id="dr">一、DR模式</h4>
 
-<p><img src="/lvs/dr.jpg" alt="dr" /></p>
+<p><img src="/static/img/blog/lvs/dr.jpg" alt="dr" /></p>
 
 <p>堡垒机脚本：</p>
 
 <p>lvs.sh</p>
 
-<p><code class="highlighter-rouge">shell
-#！/bin/sh
- VIP=192.168.0.210
- RIP1=192.168.0.175
- RIP2=192.168.0.145
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#！/bin/sh</span>
+ <span class="nv">VIP</span><span class="o">=</span>192.168.0.210
+ <span class="nv">RIP1</span><span class="o">=</span>192.168.0.175
+ <span class="nv">RIP2</span><span class="o">=</span>192.168.0.145
  . /etc/rc.d/init.d/functions
-         case "$1" in
-         start)
-         echo "start LVS of DirectorServer"
-         #Set the Virtual IP Address
-         /sbin/ifconfig eth0:1 $VIP broadcast $VIP netmask 255.255.255.255 up
-         /sbin/route add -host $VIP dev eth0:1
-         #Clear IPVS Table
+         <span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+         </span>start<span class="p">)</span>
+         <span class="nb">echo</span> <span class="s2">"start LVS of DirectorServer"</span>
+         <span class="c">#Set the Virtual IP Address</span>
+         /sbin/ifconfig eth0:1 <span class="nv">$VIP</span> broadcast <span class="nv">$VIP</span> netmask 255.255.255.255 up
+         /sbin/route add -host <span class="nv">$VIP</span> dev eth0:1
+         <span class="c">#Clear IPVS Table</span>
          /sbin/ipvsadm -C
-         #Set Lvs
-         /sbin/ipvsadm -A -t $VIP:80 -s rr
-         /sbin/ipvsadm -a -t $VIP:80 -r $RIP1:80 -g
-         /sbin/ipvsadm -a -t $VIP:80 -r $RIP2:80 -g
-         #Run Lvs
+         <span class="c">#Set Lvs</span>
+         /sbin/ipvsadm -A -t <span class="nv">$VIP</span>:80 -s rr
+         /sbin/ipvsadm -a -t <span class="nv">$VIP</span>:80 -r <span class="nv">$RIP1</span>:80 -g
+         /sbin/ipvsadm -a -t <span class="nv">$VIP</span>:80 -r <span class="nv">$RIP2</span>:80 -g
+         <span class="c">#Run Lvs</span>
          /sbin/ipvsadm
-         ;;
-         stop)
-         echo "close LVS Directorserver"
+         <span class="p">;;</span>
+         stop<span class="p">)</span>
+         <span class="nb">echo</span> <span class="s2">"close LVS Directorserver"</span>
          /sbin/ipvsadm -C
          /sbin/ifconfig eth0:1 down
-         ;;
-         *)
-         echo "Usage： $0 {start|stop}"
-         exit 1
-         esac
-</code></p>
+         <span class="p">;;</span>
+         <span class="k">*</span><span class="p">)</span>
+         <span class="nb">echo</span> <span class="s2">"Usage： </span><span class="nv">$0</span><span class="s2"> {start|stop}"</span>
+         <span class="nb">exit </span>1
+         <span class="k">esac</span>
+</code></pre>
+</div>
 
 <p>真实机脚本:</p>
 
 <p>real-server.sh</p>
 
-<p><code class="highlighter-rouge">shell
-#!/bin/bash
- VIP=192.168.0.210
- BROADCAST=192.168.0.255  #vip's broadcast
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+ <span class="nv">VIP</span><span class="o">=</span>192.168.0.210
+ <span class="nv">BROADCAST</span><span class="o">=</span>192.168.0.255  <span class="c">#vip's broadcast</span>
  . /etc/rc.d/init.d/functions
- case "$1" in
-     start)
-      echo "reparing for Real Server"
-        echo "1" &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore
-        echo "2" &gt;/proc/sys/net/ipv4/conf/lo/arp_announce
-        echo "1" &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
-        echo "2" &gt;/proc/sys/net/ipv4/conf/all/arp_announce
-        ifconfig lo:0 $VIP netmask 255.255.255.255 broadcast $BROADCAST up
-         /sbin/route add -host $VIP dev lo:0
-         ;;
-     stop)
+ <span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+     </span>start<span class="p">)</span>
+      <span class="nb">echo</span> <span class="s2">"reparing for Real Server"</span>
+        <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore
+        <span class="nb">echo</span> <span class="s2">"2"</span> &gt;/proc/sys/net/ipv4/conf/lo/arp_announce
+        <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
+        <span class="nb">echo</span> <span class="s2">"2"</span> &gt;/proc/sys/net/ipv4/conf/all/arp_announce
+        ifconfig lo:0 <span class="nv">$VIP</span> netmask 255.255.255.255 broadcast <span class="nv">$BROADCAST</span> up
+         /sbin/route add -host <span class="nv">$VIP</span> dev lo:0
+         <span class="p">;;</span>
+     stop<span class="p">)</span>
          ifconfig lo:0 down
-        echo "0" &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore
-        echo "0" &gt;/proc/sys/net/ipv4/conf/lo/arp_announce
-        echo "0" &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
-        echo "0" &gt;/proc/sys/net/ipv4/conf/all/arp_announce
-         ;;
-     *)
-         echo "Usage: lvs {start|stop}"
-         exit 1
- esac
-</code></p>
+        <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore
+        <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/lo/arp_announce
+        <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
+        <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/all/arp_announce
+         <span class="p">;;</span>
+     <span class="k">*</span><span class="p">)</span>
+         <span class="nb">echo</span> <span class="s2">"Usage: lvs {start|stop}"</span>
+         <span class="nb">exit </span>1
+ <span class="k">esac</span>
+</code></pre>
+</div>
 
 <h4 id="tun">二、TUN模式</h4>
 
-<p><img src="/lvs/tun.jpg" alt="tun" /></p>
+<p><img src="/static/img/blog/lvs/tun.jpg" alt="tun" /></p>
 
 <p>堡垒机脚本：</p>
 
 <p>lvs.sh</p>
 
-<p><code class="highlighter-rouge">shell
-#!/bin/sh
- # description: start LVS of Directorserver
- VIP=192.168.25.41（注意，lvs server那台机器2个ip，一个是vip,一个是本身ip例如192.168.25.42）
- RIP1=192.168.25.44
- RIP2=192.168.25.45
- #RIPn=192.168.0.n
- GW=192.168.25.254
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+ <span class="c"># description: start LVS of Directorserver</span>
+ <span class="nv">VIP</span><span class="o">=</span>192.168.25.41（注意，lvs server那台机器2个ip，一个是vip,一个是本身ip例如192.168.25.42）
+ <span class="nv">RIP1</span><span class="o">=</span>192.168.25.44
+ <span class="nv">RIP2</span><span class="o">=</span>192.168.25.45
+ <span class="c">#RIPn=192.168.0.n</span>
+ <span class="nv">GW</span><span class="o">=</span>192.168.25.254
  . /etc/rc.d/init.d/functions
- case "$1" in
- start)
- echo " start LVS of DirectorServer"
- # set the Virtual IP Address
- /sbin/ifconfig tunl0 $VIP broadcast $VIP netmask 255.255.255.0 up
- /sbin/route add -host $VIP dev tunl0
- #Clear IPVS table
+ <span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+ </span>start<span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">" start LVS of DirectorServer"</span>
+ <span class="c"># set the Virtual IP Address</span>
+ /sbin/ifconfig tunl0 <span class="nv">$VIP</span> broadcast <span class="nv">$VIP</span> netmask 255.255.255.0 up
+ /sbin/route add -host <span class="nv">$VIP</span> dev tunl0
+ <span class="c">#Clear IPVS table</span>
  /sbin/ipvsadm -C
- #set LVS
- /sbin/ipvsadm -A -t $VIP:80 -s rr
- /sbin/ipvsadm -a -t $VIP:80 -r $RIP1:80 -i
- /sbin/ipvsadm -a -t $VIP:80 -r $RIP2:80 -i
- #/sbin/ipvsadm -a -t $VIP:80 -r $RIP3:80 -i
- #Run LVS
+ <span class="c">#set LVS</span>
+ /sbin/ipvsadm -A -t <span class="nv">$VIP</span>:80 -s rr
+ /sbin/ipvsadm -a -t <span class="nv">$VIP</span>:80 -r <span class="nv">$RIP1</span>:80 -i
+ /sbin/ipvsadm -a -t <span class="nv">$VIP</span>:80 -r <span class="nv">$RIP2</span>:80 -i
+ <span class="c">#/sbin/ipvsadm -a -t $VIP:80 -r $RIP3:80 -i</span>
+ <span class="c">#Run LVS</span>
  /sbin/ipvsadm
- #end
- ;;
- stop)
- echo "close LVS Directorserver"
+ <span class="c">#end</span>
+ <span class="p">;;</span>
+ stop<span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"close LVS Directorserver"</span>
  ifconfig tunl0 down
  /sbin/ipvsadm -C
- ;;
- *)
- echo "Usage: $0 {start|stop}"
- exit 1
- esac
-</code></p>
+ <span class="p">;;</span>
+ <span class="k">*</span><span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop}"</span>
+ <span class="nb">exit </span>1
+ <span class="k">esac</span>
+</code></pre>
+</div>
 
 <p>真实机脚本:</p>
 
 <p>real-server.sh</p>
 
-<p><code class="highlighter-rouge">shell
-#!/bin/sh
- # ghb in 20060812
- # description: Config realserver tunl port and apply arp patch
- VIP=192.168.25.43
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+ <span class="c"># ghb in 20060812</span>
+ <span class="c"># description: Config realserver tunl port and apply arp patch</span>
+ <span class="nv">VIP</span><span class="o">=</span>192.168.25.43
  . /etc/rc.d/init.d/functions
- case "$1" in
- start)
- echo "Tunl port starting"
- ifconfig tunl0 $VIP netmask 255.255.255.0 broadcast $VIP up
- /sbin/route add -host $VIP dev tunl0
- echo "1" &gt;/proc/sys/net/ipv4/conf/tunl0/arp_ignore
- echo "2" &gt;/proc/sys/net/ipv4/conf/tunl0/arp_announce
- echo "1" &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
- echo "2" &gt;/proc/sys/net/ipv4/conf/all/arp_announce
+ <span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+ </span>start<span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"Tunl port starting"</span>
+ ifconfig tunl0 <span class="nv">$VIP</span> netmask 255.255.255.0 broadcast <span class="nv">$VIP</span> up
+ /sbin/route add -host <span class="nv">$VIP</span> dev tunl0
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/tunl0/arp_ignore
+ <span class="nb">echo</span> <span class="s2">"2"</span> &gt;/proc/sys/net/ipv4/conf/tunl0/arp_announce
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
+ <span class="nb">echo</span> <span class="s2">"2"</span> &gt;/proc/sys/net/ipv4/conf/all/arp_announce
  sysctl -p
- ;;
- stop)
- echo "Tunl port closing"
+ <span class="p">;;</span>
+ stop<span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"Tunl port closing"</span>
  ifconfig tunl0 down
- echo 1 &gt; /proc/sys/net/ipv4/ip_forward
- echo 0 &gt; /proc/sys/net/ipv4/conf/all/arp_announce
- ;;
- *)
- echo "Usage: $0 {start|stop}"
- exit 1
- esac
-</code></p>
+ <span class="nb">echo </span>1 &gt; /proc/sys/net/ipv4/ip_forward
+ <span class="nb">echo </span>0 &gt; /proc/sys/net/ipv4/conf/all/arp_announce
+ <span class="p">;;</span>
+ <span class="k">*</span><span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop}"</span>
+ <span class="nb">exit </span>1
+ <span class="k">esac</span>
+</code></pre>
+</div>
 
 <h4 id="nat">三、NAT模式</h4>
 
-<p><img src="/lvs/nat.jpg" alt="nat" /></p>
+<p><img src="/static/img/blog/lvs/nat.jpg" alt="nat" /></p>
 
 <p>堡垒机脚本：</p>
 
 <p>lvs.sh</p>
 
-<p><code class="highlighter-rouge">shell
-#!/bin/sh
- # description: start LVS of Nat
- VLAN-IP=202.99.59.110
- RIP1=10.1.1.2
- RIP2=10.1.1.3
- #RIPn=10.1.1.n
- GW=10.1.1.1
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+ <span class="c"># description: start LVS of Nat</span>
+ VLAN-IP<span class="o">=</span>202.99.59.110
+ <span class="nv">RIP1</span><span class="o">=</span>10.1.1.2
+ <span class="nv">RIP2</span><span class="o">=</span>10.1.1.3
+ <span class="c">#RIPn=10.1.1.n</span>
+ <span class="nv">GW</span><span class="o">=</span>10.1.1.1
  . /etc/rc.d/init.d/functions
- case "$1" in
- start)
- echo " start LVS of NAtServer"
- echo "1" &gt;/proc/sys/net/ipv4/ip_forward
- echo "0" &gt;/proc/sys/net/ipv4/conf/all/send_redirects
- echo "0" &gt;/proc/sys/net/ipv4/conf/default/send_redirects
- echo "0" &gt;/proc/sys/net/ipv4/conf/eth0/send_redirects
- echo "0" &gt;/proc/sys/net/ipv4/conf/eth1/send_redirects(内网卡上的)
- #Clear IPVS table
+ <span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+ </span>start<span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">" start LVS of NAtServer"</span>
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/ip_forward
+ <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/all/send_redirects
+ <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/default/send_redirects
+ <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/eth0/send_redirects
+ <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/conf/eth1/send_redirects<span class="o">(</span>内网卡上的<span class="o">)</span>
+ <span class="c">#Clear IPVS table</span>
  /sbin/ipvsadm -C
- #set LVS
+ <span class="c">#set LVS</span>
  /sbin/ipvsadm -a -t 202.99.59.110:80 -r 10.1.1.2:80 -m -w 1
  /sbin/ipvsadm -a -t 202.99.59.110:80 -r 10.1.1.3:80 -m -w 1
- #Run LVS
+ <span class="c">#Run LVS</span>
  /sbin/ipvsadm
- #end
- ;;
- stop)
- echo "close LVS Nat server"
- echo "0" &gt;/proc/sys/net/ipv4/ip_forward
- echo "1" &gt;/proc/sys/net/ipv4/conf/all/send_redirects
- echo "1" &gt;/proc/sys/net/ipv4/conf/default/send_redirects
- echo "1" &gt;/proc/sys/net/ipv4/conf/eth0/send_redirects
- echo "1" &gt;/proc/sys/net/ipv4/conf/eth1/send_redirects(内网卡上的)
+ <span class="c">#end</span>
+ <span class="p">;;</span>
+ stop<span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"close LVS Nat server"</span>
+ <span class="nb">echo</span> <span class="s2">"0"</span> &gt;/proc/sys/net/ipv4/ip_forward
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/all/send_redirects
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/default/send_redirects
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/eth0/send_redirects
+ <span class="nb">echo</span> <span class="s2">"1"</span> &gt;/proc/sys/net/ipv4/conf/eth1/send_redirects<span class="o">(</span>内网卡上的<span class="o">)</span>
  /sbin/ipvsadm -C
- ;;
- *)
- echo "Usage: $0 {start|stop}"
- exit 1
- esac
-</code></p>
+ <span class="p">;;</span>
+ <span class="k">*</span><span class="p">)</span>
+ <span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop}"</span>
+ <span class="nb">exit </span>1
+ <span class="k">esac</span>
+</code></pre>
+</div>
 
 <p>VS-Nat 模式的后端机器不需要配置。</p>
 
@@ -516,7 +532,7 @@ modprobe -l|grep ipvs     ##检查ipvs的模块
 
 <p>附比较表格图:</p>
 
-<p><img src="/lvs/bijiao.jpg" alt="bijiao" /></p>
+<p><img src="/static/img/blog/lvs/bijiao.jpg" alt="bijiao" /></p>
 
 
                     <hr>
@@ -533,6 +549,8 @@ modprobe -l|grep ipvs     ##检查ipvs的模块
                                 <div>
                                 
                                 
+                                <i class="fa fa-comments-o"> </i> <span class='disqus-comment-count' data-disqus-url="https://andgosds.github.io//linux/2015/05/09/lvs.html">0</span> comments
+                                
                                 </div>
                             </div>
                         </div>
@@ -548,10 +566,38 @@ modprobe -l|grep ipvs     ##检查ipvs的模块
                             <br>
                             <!-- share -->
                             
+                                <h2>Share:</h2>
+
+<div class="bshare-custom">
+	<a title="分享到微信" class="bshare-weixin"></a>
+	<a title="分享到QQ空间" class="bshare-qzone"></a>
+	<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+	<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=513f778e-a8f7-4c20-9ec2-d29cc2328d75&amp;pophcol=1&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            
                             <br>
                             <!-- comment -->
                             
 
+
+<div id="disqus_thread"></div>
+<script>
+/** * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+	/*
+	var disqus_config = function () { this.page.url = PAGE_URL;
+	// Replace PAGE_URL with your page's canonical URL variable this.page.identifier = PAGE_IDENTIFIER;
+	// Replace PAGE_IDENTIFIER with your page's unique identifier variable };
+	*/
+	(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = '//jalpc.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
                         </div>
@@ -573,7 +619,45 @@ modprobe -l|grep ipvs     ##检查ipvs的模块
 
 <!-- Google analytics -->
 
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-73784599-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+
+  <script type="text/javascript">
+    var disqusShortName = "jalpc";
+
+    var disqusPublicKey = "tj2MPaNlHMONwTH5bGDNSXyaBpW7q282MeUzh5CwcjJerNhK8Kxk3aWo7IckzTX7";
+
+    var urlArray = [];
+    $('.disqus-comment-count').each(function () {
+      var url = $(this).attr('data-disqus-url');
+      urlArray.push('link:' + url);
+    });
+    $.ajax({
+      type: 'GET',
+      url: "https://disqus.com/api/3.0/threads/set.jsonp",
+      data: { api_key: disqusPublicKey, forum : disqusShortName, thread : urlArray },
+      cache: false,
+      dataType: "jsonp",
+      success: function (result) {
+        for (var i in result.response) {
+          var count = result.response[i].posts;
+          if ( count ) {
+            $('.disqus-comment-count[data-disqus-url="' + result.response[i].link + '"]').html(count);
+          }
+        }
+      }
+    });
+</script>
 
 
 
