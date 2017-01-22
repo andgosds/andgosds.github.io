@@ -1,16 +1,16 @@
 # careers section data
 - name:
-    detail: Nextcode
-    i18n: nextcode
+    detail: Master DS y BD
+    i18n: master
   desc:
-    detail: Now I am in Nextcode and develop website with Python code for genetic analysis.
-    i18n: nextcode_des
+    detail: Ahora estoy cursando el Master en Data Science y Big Data por la Universidad de Sevilla.
+    i18n: master_des
   date:
-    detail: Apr. 2016
-    i18n: nextcode_date
+    detail: 2016-2017
+    i18n: master_date
   job:
-    detail: Python Developer
-    i18n: nextcode_job
+    detail: Ciencia de Datos
+    i18n: master_job
   icon: fa-plus-square
 
 - name:
